@@ -8,7 +8,6 @@
 #include "melody.hpp"
 
 // I've commented some out to avoid consuming unnecessary additional memory.
-// // The double braces here are necessary.
 // const Melody<29> GOOD_OLD_SONG = {{
 //   {262, 0, 386},
 //   {349, 500, 565},
@@ -126,6 +125,11 @@
 //   {196, 45312, 131}
 // }};
 
+// The double braces are required. This is known as an initializer list, and since the only argument to the Melody
+// constructor is an array, it's easy to use another initializer list to initialize that array as well. This causes the
+// double braces. The notes themselves are initialized similarly.
+// The left side features the use of the Melody template struct, which is created with argument 45 because there are 45
+// notes.
 const Melody<45> THRILLER = {{
   {415, 250, 142},
   {494, 500, 142},

@@ -1,5 +1,7 @@
 /// Pre-compilation definitions for some common pitches and their frequencies rounded to the nearest integer.
 
+// This file is currently unused due to the melody_creator Python library doing this automatically.
+
 // See note.hpp for an explanation of header guards.
 #ifndef PITCHES_HPP
 #define PITCHES_HPP
