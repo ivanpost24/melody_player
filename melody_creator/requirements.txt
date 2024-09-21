@@ -1,0 +1,5 @@
+# A requirements.txt file contains information on the libraries you need to have installed to execute the module.
+setuptools~=75.1.0  # Required for building this module as a dependency.
+-e .  # Installs the module itself as a dependency. This resolves issues with the relative import system in Python.
+music21~=9.1.0  # Read MusicXML files.
+pydub~=0.25.1  # Create audio.
