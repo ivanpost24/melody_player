@@ -25,5 +25,6 @@ void loop() {
     playMelody(BUZZER_PIN, THRILLER);  // ...play it...
     // 
     shouldPlayMelody = false;  // ...and then indicate we've already played it.
+    
   }
 }

@@ -52,7 +52,7 @@ void playMelody(uint8_t buzzerPin, const Melody<length>& melody) {
   delay(melody.cbegin()->offset());
   // This is called the iterator pattern for "for" loops, and it's much safer than using raw indices. We end one index
   // early because special behavior is required for the final note.
-  for (Note* note = melody.begin(); note < melody.end() - 1; note++) {
+  for (const Note* note = melody.cbegin(); note < melody.cend() - 1; note++) {
     // This line actually plays the note at the given frequency and for the given duration.
     tone(buzzerPin, note->frequency(), note->duration());
     // delay() suspends execution for the given number of milliseconds. In this case, we're calculating the differences

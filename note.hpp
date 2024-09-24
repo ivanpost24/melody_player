@@ -68,7 +68,7 @@ private:
   // a different convention is used).
   uint16_t m_frequency;
   unsigned long m_offset;
-  unsigned long m_duration;
+  unsigned int m_duration;
 
 };
 
