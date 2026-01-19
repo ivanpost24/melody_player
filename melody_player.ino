@@ -5,10 +5,16 @@
 #include "songs.hpp"
 
 // Indicates the pin on the Arduino to which the buzzer is connected.
-const int BUZZER_PIN = 8;
+constexpr uint8_t BUZZER_PIN = 8;
 
-// Ensures the melody plays only once
-bool shouldPlayMelody = true;
+constexpr uint8_t FORCE_SENSOR_PIN = A0;
+
+constexpr int FORCE_THRESHOLD = 200;
+constexpr unsigned long DEBOUNCE_DELAY_MILLIS = 200;
+
+bool shouldPlayMelody = false;
+bool lastState = false;
+unsigned long lastDebounceTime = 0;
 
 void setup() {
   // Where was Serial.begin #included from, you may ask? The answer is the header file declaring it is automatically
@@ -19,12 +25,24 @@ void setup() {
 }
 
 void loop() {
-  if (shouldPlayMelody) { // If we haven't played the melody yet...
-    // The playMelody function was #included from melody.hpp. If the implementation is changed down the road, we don't
-    // need to do anything in this file unless the signature changed.
-    playMelody(BUZZER_PIN, THRILLER);  // ...play it...
-    // 
-    shouldPlayMelody = false;  // ...and then indicate we've already played it.
-    
+  // Read values from the force sensor
+  int force = analogRead(FORCE_SENSOR_PIN);
+  bool currentState = force > 500;
+  // Debounce the state. This ensures that small fluctuations in the force on the
+  // sensor don't cause erratic behavior.
+  // See https://docs.arduino.cc/built-in-examples/digital/Debounce/ for more info.
+  if (currentState == lastState) {
+    if ((millis() - lastDebounceTime) > DEBOUNCE_DELAY_MILLIS) {
+      shouldPlayMelody = currentState;
+      lastState = shouldPlayMelody;
+    }
+  } else {
+    lastDebounceTime = millis();
+    lastState = currentState;
+  }
+
+  if (shouldPlayMelody) {
+    playMelody(BUZZER_PIN, THRILLER);
+    shouldPlayMelody = false;
   }
 }
